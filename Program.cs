@@ -15,7 +15,9 @@ namespace hubdemon
                 Console.WriteLine("~~~~~~ .hubdemon ~~~~~~\n");
                 Console.Write("Give me a command: ");
 
-                if (parseCommand.TryGetValue(Console.ReadLine(), out Action method))
+                string userInput = Console.ReadLine() ?? "";
+
+                if (parseCommand.TryGetValue(userInput.ToLower(), out Action method))
                 {
                     method();
                 }
