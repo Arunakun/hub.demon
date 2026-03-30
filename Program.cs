@@ -15,6 +15,7 @@ namespace hub.demon
                 Console.WriteLine("~~~~~~ hub.demon ~~~~~~\n");
                 Console.Write("Give me a command: ");
 
+                // ?. only calls .ToLower() if value is not null to avoid crashing, ?? "" replaces null with empty string to avoid crashing
                 string userInput = Console.ReadLine()?.ToLower() ?? "";
 
                 if (parseCommand.TryGetValue(userInput, out Action method))
