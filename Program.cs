@@ -1,23 +1,23 @@
-﻿using System.Diagnostics;
+﻿using hub.demon.commands;
 
-namespace hubdemon
+namespace hub.demon
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             Dictionary<string, Action> parseCommand = new Dictionary<string, Action>();
-            parseCommand.Add("exit", Exit);
+            parseCommand.Add("exit", Commands.Exit);
 
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("~~~~~~ .hubdemon ~~~~~~\n");
+                Console.WriteLine("~~~~~~ hub.demon ~~~~~~\n");
                 Console.Write("Give me a command: ");
 
-                string userInput = Console.ReadLine() ?? "";
+                string userInput = Console.ReadLine()?.ToLower() ?? "";
 
-                if (parseCommand.TryGetValue(userInput.ToLower(), out Action method))
+                if (parseCommand.TryGetValue(userInput, out Action method))
                 {
                     method();
                 }
@@ -29,15 +29,6 @@ namespace hubdemon
                 }
 
             }
-        }
-
-
-        static void Exit()
-        {
-            Console.WriteLine("You are now exiting");
-            Console.WriteLine("Press Enter to exit .hubdemon");
-            Console.ReadLine();
-            Environment.Exit(0);
         }
     }
 }
