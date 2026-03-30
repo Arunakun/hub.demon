@@ -8,7 +8,6 @@ namespace hubdemon
         {
             Dictionary<string, Action> parseCommand = new Dictionary<string, Action>();
             parseCommand.Add("exit", Exit);
-            parseCommand.Add("todo", ToDo);
 
             while (true)
             {
@@ -36,17 +35,6 @@ namespace hubdemon
             Console.WriteLine("You are now exiting");
             Console.WriteLine("Press Enter to exit .hubdemon");
             Console.ReadLine();
-            Environment.Exit(0);
-        }
-
-        static void ToDo()
-        {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "todo.exe",
-                UseShellExecute = true
-            });
-
             Environment.Exit(0);
         }
     }
