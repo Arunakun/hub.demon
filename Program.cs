@@ -8,6 +8,7 @@ namespace hub.demon
         {
             Dictionary<string, Action> parseCommand = new Dictionary<string, Action>();
             parseCommand.Add("exit", Commands.Exit);
+            parseCommand.Add("caesar", Commands.Caesar);
 
             while (true)
             {
@@ -20,6 +21,7 @@ namespace hub.demon
 
                 if (parseCommand.TryGetValue(userInput, out Action method))
                 {
+                    Console.Clear();
                     method();
                 }
                 else
