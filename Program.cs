@@ -30,7 +30,6 @@ namespace hub.demon
                     Console.WriteLine("Press Enter to continue...");
                     Console.ReadLine();
                 }
-
             }
         }
     }

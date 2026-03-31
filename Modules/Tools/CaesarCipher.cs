@@ -1,4 +1,6 @@
-﻿namespace hub.demon.Modules.Tools
+﻿using System.Numerics;
+
+namespace hub.demon.Modules.Tools
 {
     internal class CaesarCipher
     {
@@ -11,12 +13,12 @@
             {
                 Console.WriteLine("Press '1' to use this tool");
                 Console.WriteLine("Press '2' to exit");
-                Int32.TryParse(char.ToString(Console.ReadLine()[0]), out int choice);
+                Int32.TryParse(Console.ReadLine(), out int choice);
                 Console.Clear();
 
                 if (choice == 1)
                 {
-                    Cipher();
+                    MessagePrep();
                 }
 
                 else if (choice == 2)
@@ -34,47 +36,85 @@
             }
         }
 
-        public static void Cipher()
+        public static void MessagePrep()
         {
             while (true)
             {
+                Console.Clear();
                 Console.Write("Enter message to encrypt/decrypt: ");
                 string userInput = Console.ReadLine()?.ToLower() ?? "";
 
                 if (userInput == "")
                 {
-                    Console.WriteLine("Thou cannot shift what is not there...");
+                    Console.WriteLine("\nThou cannot shift what is not there...");
                     Console.WriteLine("Press Enter to start over...");
+                    Console.ReadLine();
                     continue;
                 }
 
-                Console.Write("Enter the amount of times the letters are to shift: ");
+                Console.Write("\nEnter the amount of times the letters are to shift: ");
                 Int32.TryParse(Console.ReadLine(), out int value);
 
                 if (value == 0)
                 {
-                    Console.WriteLine("Thou cannot shift 0 times...");
+                    Console.WriteLine("\nThou cannot shift 0 times...");
                     Console.WriteLine("Press Enter to start over...");
+                    Console.ReadLine();
                     continue;
                 }
 
-                Console.Write("Enter direction of shifts (left/right)");
+                Console.Write("\nEnter direction of shifts (left/right): ");
                 string dirInput = Console.ReadLine()?.ToLower() ?? "";
 
                 if (dirInput == "")
                 {
-                    Console.WriteLine("Thou cannot shift without choosing a direction...");
+                    Console.WriteLine("\nThou cannot shift without choosing a direction...");
                     Console.WriteLine("Press Enter to start over...");
+                    Console.ReadLine();
                     continue;
                 }
                 else if (dirInput != "left" && dirInput != "right")
                 {
-                    Console.WriteLine("Thou cannot shift other than 'left' or 'right'...");
+                    Console.WriteLine("\nThou cannot shift other than 'left' or 'right'...");
                     Console.WriteLine("Press Enter to start over...");
+                    Console.ReadLine();
                     continue;
                 }
 
+                Cipher(userInput, value, dirInput);
+                break;
             }
+        }
+
+        public static void Cipher(string message, int value, string direction)
+        {
+            Console.Clear();
+            if (direction == "left")
+            {
+                value = -value;
+            }
+
+            string result = "";
+
+            foreach (char letter in message)
+            {
+                int code = (int)letter + value;
+                if (code > (int)'z')
+                {
+                    code -= 26;
+                }
+
+                else if (code < (int)'a')
+                {
+                    code += 26;
+                }
+
+                result += (char)code;
+            }
+
+            Console.WriteLine($"Your message has been (de)ciphered:\n{result}");
+            Console.WriteLine("Press Enter to continue...");
+            Console.ReadLine();
         }
     }
 }
