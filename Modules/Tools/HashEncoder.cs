@@ -76,15 +76,24 @@ namespace hub.demon.Modules.Tools
                 Console.ReadKey();
 
                 int? next = ConsoleNavigator.Navigation(
-                    "WHAT NEXT?",
+                    $"{algoName} COMPLETE",
                     new string[]
                     {
-                        "Hash another",
+                        $"Hash again ({algoName})",
+                        "Choose different algorithm",
                         "Back to menu"
                     });
 
-                if (next == null || next == 1)
+                if (next == null || next == 2)
                     return;
+
+                if (next == 1)
+                {
+                    HashEncoderMain(); // go back to algorithm selection
+                    return;
+                }
+
+                // next == 0 → continue loop (same algorithm)
             }
         }
     }
