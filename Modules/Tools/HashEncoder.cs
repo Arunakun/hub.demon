@@ -1,5 +1,6 @@
 ﻿using hub.demon.UI;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace hub.demon.Modules.Tools
 {
@@ -7,33 +8,83 @@ namespace hub.demon.Modules.Tools
     {
         public static void HashEncoderMain()
         {
-            int? choice = ConsoleNavigator.Navigation("HASH TOOL", new string[] { "Encode (MD5)", "Decode / Compare", "Back" });
-            
-            if (choice == null || choice == 2)
+            int? choice = ConsoleNavigator.Navigation(
+                "HASH TOOL",
+                new string[]
+                {
+                    "MD5",
+                    "SHA1",
+                    "SHA256",
+                    "SHA512",
+                    "Back"
+                });
+
+            if (choice == null || choice == 4)
                 return;
 
-            if (choice == 0)
-                RunEncoderFlow();
+            RunEncoderFlow(choice.Value);
         }
 
-        public static void RunEncoderFlow()
+        public static void RunEncoderFlow(int type)
         {
-            Console.Clear();
-            Console.WriteLine("Enter the text to hash (MD5):");
-            string input = Console.ReadLine() ?? "";
-            using (var md5 = System.Security.Cryptography.MD5.Create())
+            string algoName = type switch
             {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                    sb.Append(hashBytes[i].ToString("x2"));
-                string hashResult = sb.ToString();
+                0 => "MD5",
+                1 => "SHA1",
+                2 => "SHA256",
+                3 => "SHA512",
+                _ => "Unknown"
+            };
+
+            while (true)
+            {
+                using HashAlgorithm algorithm = type switch
+                {
+                    0 => MD5.Create(),
+                    1 => SHA1.Create(),
+                    2 => SHA256.Create(),
+                    3 => SHA512.Create(),
+                    _ => throw new Exception("Invalid type")
+                };
+
                 Console.Clear();
-                Console.WriteLine("MD5 Hash result:\n");
+                Console.WriteLine($"Enter the text to hash ({algoName}):");
+
+                string input = Console.ReadLine() ?? "";
+
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    Console.WriteLine("\nInput cannot be empty.");
+                    Console.ReadKey();
+                    continue;
+                }
+
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = algorithm.ComputeHash(inputBytes);
+
+                string hashResult = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+
+                Console.Clear();
+
+                Console.WriteLine($"{algoName} Hash result:\n");
+
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(hashResult);
+                Console.ResetColor();
+
                 Console.WriteLine("\nPress any key to continue...");
                 Console.ReadKey();
+
+                int? next = ConsoleNavigator.Navigation(
+                    "WHAT NEXT?",
+                    new string[]
+                    {
+                        "Hash another",
+                        "Back to menu"
+                    });
+
+                if (next == null || next == 1)
+                    return;
             }
         }
     }
