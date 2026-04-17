@@ -10,12 +10,7 @@ namespace hub.demon
             string[] menuMain =
             {
                 "Caesar Cipher",
-                "Exit",
-                "Test1",
-                "Test2",
-                "Test3",
-                "Test4",
-                "Test5"
+                "Exit"
             };
 
             while (true)

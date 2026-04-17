@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using hub.demon.UI;
 
 namespace hub.demon.Modules.Tools
 {
@@ -6,115 +7,133 @@ namespace hub.demon.Modules.Tools
     {
         public static void CaesarMain()
         {
-            Console.Clear();
-            Console.WriteLine("~~~~~~ caesar.cipher ~~~~~~\n");
-            
             while (true)
             {
-                Console.WriteLine("Press '1' to use this tool");
-                Console.WriteLine("Press '2' to exit");
-                Int32.TryParse(Console.ReadLine(), out int choice);
-                Console.Clear();
+                int? choice = ConsoleHelper.Navigation(
+                    "CAESAR CIPHER",
+                    new string[]
+                    {
+                        "Use tool",
+                        "Exit"
+                    });
 
-                if (choice == 1)
-                {
-                    MessagePrep();
-                }
+                if (choice == null || choice == 1)
+                    return;
 
-                else if (choice == 2)
-                {
-                    Console.WriteLine("Thank you for using caesar.cipher");
-                    Console.WriteLine("Press any key to return to the hub...");
-                    Console.ReadKey();
-                    break;
-                }
-
-                else
-                {
-                    Console.WriteLine("Your input was invalid, please try again\n");
-                }
+                if (choice == 0)
+                    RunCipherFlow();
             }
         }
 
-        public static void MessagePrep()
+        private static void RunCipherFlow()
         {
             while (true)
             {
                 Console.Clear();
-                Console.Write("Enter message to encrypt/decrypt: ");
-                string userInput = Console.ReadLine()?.ToLower() ?? "";
 
-                if (userInput == "")
-                {
-                    Console.WriteLine("\nThou cannot shift what is not there...");
-                    Console.WriteLine("Press any key to start over...");
-                    Console.ReadKey();
-                    continue;
-                }
+                string message = GetMessage();
+                int shift = GetShift();
+                int direction = GetDirection(); // +1 or -1
 
-                Console.Write("\nEnter the amount of times the letters are to shift: ");
-                Int32.TryParse(Console.ReadLine(), out int value);
+                string result = Cipher(message, shift * direction);
 
-                if (value == 0)
-                {
-                    Console.WriteLine("\nThou cannot shift 0 times...");
-                    Console.WriteLine("Press any key to start over...");
-                    Console.ReadKey();
-                    continue;
-                }
+                Console.Clear();
+                Console.WriteLine("Result:\n");
+                Console.WriteLine(result);
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey();
 
-                Console.Write("\nEnter direction of shifts (left/right): ");
-                string dirInput = Console.ReadLine()?.ToLower() ?? "";
+                // After result → ask what to do next
+                int? next = ConsoleHelper.Navigation(
+                    "WHAT NEXT?",
+                    new string[]
+                    {
+                        "Try again",
+                        "Back to menu"
+                    });
 
-                if (dirInput == "")
-                {
-                    Console.WriteLine("\nThou cannot shift without choosing a direction...");
-                    Console.WriteLine("Press any key to start over...");
-                    Console.ReadKey();
-                    continue;
-                }
-                else if (dirInput != "left" && dirInput != "right")
-                {
-                    Console.WriteLine("\nThou cannot shift other than 'left' or 'right'...");
-                    Console.WriteLine("Press any key to start over...");
-                    Console.ReadKey();
-                    continue;
-                }
-
-                Cipher(userInput, value, dirInput);
-                break;
+                if (next == null || next == 1)
+                    return;
             }
         }
 
-        public static void Cipher(string message, int value, string direction)
+        // --- INPUT HELPERS ---
+
+        private static string GetMessage()
         {
-            Console.Clear();
-            if (direction == "left")
+            while (true)
             {
-                value = -value;
+                Console.Write("Enter message: ");
+                string input = Console.ReadLine()?.ToLower() ?? "";
+
+                if (!string.IsNullOrWhiteSpace(input))
+                    return input;
+
+                Console.WriteLine("\nThou cannot shift what is not there...");
+                Pause();
+                Console.Clear();
             }
+        }
 
-            string result = "";
-
-            foreach (char letter in message)
+        private static int GetShift()
+        {
+            while (true)
             {
-                int code = (int)letter + value;
-                if (code > (int)'z')
-                {
-                    code -= 26;
-                }
+                Console.Write("\nShift amount: ");
+                if (int.TryParse(Console.ReadLine(), out int value) && value != 0)
+                    return value;
 
-                else if (code < (int)'a')
-                {
-                    code += 26;
-                }
-
-                result += (char)code;
+                Console.WriteLine("\nThou cannot shift 0 times...");
+                Pause();
+                Console.Clear();
             }
+        }
 
-            Console.WriteLine($"Your message has been (de)ciphered:\n{result}");
-            Console.WriteLine("Press any key to continue...");
+        private static int GetDirection()
+        {
+            while (true)
+            {
+                Console.Write("\nDirection (left/right): ");
+                string input = Console.ReadLine()?.ToLower() ?? "";
+
+                if (input == "left") return -1;
+                if (input == "right") return 1;
+
+                Console.WriteLine("\nOnly 'left' or 'right' are allowed...");
+                Pause();
+                Console.Clear();
+            }
+        }
+
+        private static void Pause()
+        {
+            Console.WriteLine("Press any key to try again...");
             Console.ReadKey();
+        }
+
+        // --- CORE LOGIC ---
+
+        private static string Cipher(string message, int shift)
+        {
+            char ShiftChar(char c)
+            {
+                if (c < 'a' || c > 'z')
+                    return c; // keep non-letters
+
+                int offset = (c - 'a' + shift) % 26;
+                if (offset < 0) offset += 26;
+
+                return (char)('a' + offset);
+            }
+
+            char[] result = new char[message.Length];
+
+            for (int i = 0; i < message.Length; i++)
+            {
+                result[i] = ShiftChar(message[i]);
+            }
+
+            return new string(result);
         }
     }
 }
