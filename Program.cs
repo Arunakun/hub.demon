@@ -1,40 +1,11 @@
-﻿using hub.demon.commands;
+﻿using hub.demon;
+using hub.demon.commands;
 using hub.demon.UI;
 
-namespace hub.demon
+class Program
 {
-    internal class Program
+    static void Main()
     {
-        static void Main(string[] args)
-        {
-            string[] menuMain =
-            {
-                "Caesar Cipher",
-                "Exit"
-            };
-
-            while (true)
-            {
-                int? choice = ConsoleHelper.Navigation("HOVEDMENU", menuMain);
-
-                if (choice == null)
-                {
-                    return;
-                }
-
-                switch (choice)
-                {
-                    case 0:
-                        Console.Clear();
-                        Commands.Caesar();
-                        break;
-
-                    case 1:
-                        Console.Clear();
-                        Commands.Exit();
-                        break;
-                }
-            }
-        }
+        new Menu().Run();
     }
 }
