@@ -24,15 +24,15 @@ namespace hub.demon
 
         public void Run()
         {
-            ShowMenu("HOVEDMENU", _items);
+            ShowMenu("HOVEDMENU", _items, isRoot: true);
         }
 
-        private void ShowMenu(string title, List<MenuItem> items)
+        private void ShowMenu(string title, List<MenuItem> items, bool isRoot = false)
         {
             while (true)
             {
                 var options = items.Select(i => i.Name).ToList();
-                options.Add("Back");
+                options.Add(isRoot ? "Exit" : "Back");
 
                 int? choice = UI.ConsoleNavigator.Navigation(title, options.ToArray());
 
@@ -49,7 +49,7 @@ namespace hub.demon
                 }
                 else
                 {
-                    ShowMenu(selectedItem.Name, selectedItem.Children!);
+                    ShowMenu(selectedItem.Name, selectedItem.Children!, false);
                 }
             }
         }
