@@ -1,5 +1,4 @@
-﻿using System;
-using hub.demon.UI;
+﻿using hub.demon.UI;
 
 namespace hub.demon.Modules.Tools
 {

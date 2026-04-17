@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace hub.demon.UI
+﻿namespace hub.demon.UI
 {
     internal class ConsoleNavigator
     {
