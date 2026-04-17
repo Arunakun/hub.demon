@@ -7,16 +7,16 @@ namespace hub.demon.commands
         public static void Exit()
         {
             Console.WriteLine("You are now exiting");
-            Console.WriteLine("Press Enter to exit hub.demon");
-            Console.ReadLine();
+            Console.WriteLine("Press any key to exit hub.demon");
+            Console.ReadKey();
             Environment.Exit(0);
         }
 
         public static void Caesar()
         {
             Console.WriteLine("Transferring to caesar.cipher");
-            Console.WriteLine("Press Enter to continue...");
-            Console.ReadLine();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
             CaesarCipher.CaesarMain();
         }
     }

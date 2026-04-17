@@ -1,4 +1,5 @@
 ﻿using hub.demon.commands;
+using hub.demon.UI;
 
 namespace hub.demon
 {
@@ -6,29 +7,37 @@ namespace hub.demon
     {
         static void Main(string[] args)
         {
-            Dictionary<string, Action> parseCommand = new Dictionary<string, Action>();
-            parseCommand.Add("exit", Commands.Exit);
-            parseCommand.Add("caesar", Commands.Caesar);
+            string[] menuMain =
+            {
+                "Caesar Cipher",
+                "Exit",
+                "Test1",
+                "Test2",
+                "Test3",
+                "Test4",
+                "Test5"
+            };
 
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine("~~~~~~ hub.demon ~~~~~~\n");
-                Console.Write("Give me a command: ");
+                int? choice = ConsoleHelper.Navigation("HOVEDMENU", menuMain);
 
-                // ?. only calls .ToLower() if value is not null to avoid crashing, ?? "" replaces null with empty string to avoid crashing
-                string userInput = Console.ReadLine()?.ToLower() ?? "";
-
-                if (parseCommand.TryGetValue(userInput, out Action method))
+                if (choice == null)
                 {
-                    Console.Clear();
-                    method();
+                    return;
                 }
-                else
+
+                switch (choice)
                 {
-                    Console.WriteLine("I scoured hell and cannot find any commands that resembles yours...");
-                    Console.WriteLine("Press Enter to continue...");
-                    Console.ReadLine();
+                    case 0:
+                        Console.Clear();
+                        Commands.Caesar();
+                        break;
+
+                    case 1:
+                        Console.Clear();
+                        Commands.Exit();
+                        break;
                 }
             }
         }

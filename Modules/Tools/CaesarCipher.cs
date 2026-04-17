@@ -24,8 +24,8 @@ namespace hub.demon.Modules.Tools
                 else if (choice == 2)
                 {
                     Console.WriteLine("Thank you for using caesar.cipher");
-                    Console.WriteLine("Press Enter to return to the hub...");
-                    Console.ReadLine();
+                    Console.WriteLine("Press any key to return to the hub...");
+                    Console.ReadKey();
                     break;
                 }
 
@@ -47,8 +47,8 @@ namespace hub.demon.Modules.Tools
                 if (userInput == "")
                 {
                     Console.WriteLine("\nThou cannot shift what is not there...");
-                    Console.WriteLine("Press Enter to start over...");
-                    Console.ReadLine();
+                    Console.WriteLine("Press any key to start over...");
+                    Console.ReadKey();
                     continue;
                 }
 
@@ -58,8 +58,8 @@ namespace hub.demon.Modules.Tools
                 if (value == 0)
                 {
                     Console.WriteLine("\nThou cannot shift 0 times...");
-                    Console.WriteLine("Press Enter to start over...");
-                    Console.ReadLine();
+                    Console.WriteLine("Press any key to start over...");
+                    Console.ReadKey();
                     continue;
                 }
 
@@ -69,15 +69,15 @@ namespace hub.demon.Modules.Tools
                 if (dirInput == "")
                 {
                     Console.WriteLine("\nThou cannot shift without choosing a direction...");
-                    Console.WriteLine("Press Enter to start over...");
-                    Console.ReadLine();
+                    Console.WriteLine("Press any key to start over...");
+                    Console.ReadKey();
                     continue;
                 }
                 else if (dirInput != "left" && dirInput != "right")
                 {
                     Console.WriteLine("\nThou cannot shift other than 'left' or 'right'...");
-                    Console.WriteLine("Press Enter to start over...");
-                    Console.ReadLine();
+                    Console.WriteLine("Press any key to start over...");
+                    Console.ReadKey();
                     continue;
                 }
 
@@ -113,8 +113,8 @@ namespace hub.demon.Modules.Tools
             }
 
             Console.WriteLine($"Your message has been (de)ciphered:\n{result}");
-            Console.WriteLine("Press Enter to continue...");
-            Console.ReadLine();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
     }
 }
