@@ -1,11 +1,11 @@
 ﻿using hub.demon;
-using hub.demon.commands;
-using hub.demon.UI;
 
 class Program
 {
     static void Main()
     {
-        new Menu().Run();
+        // Entry point: Starts the application by running the menu
+        var menu = new Menu();
+        menu.Run();
     }
 }
