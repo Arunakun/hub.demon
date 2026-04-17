@@ -9,7 +9,7 @@ namespace hub.demon.Modules.Tools
         {
             while (true)
             {
-                int? choice = ConsoleHelper.Navigation(
+                int? choice = ConsoleNavigator.Navigation(
                     "CAESAR CIPHER",
                     new string[]
                     {
@@ -44,7 +44,7 @@ namespace hub.demon.Modules.Tools
                 Console.ReadKey();
 
                 // After result → ask what to do next
-                int? next = ConsoleHelper.Navigation(
+                int? next = ConsoleNavigator.Navigation(
                     "WHAT NEXT?",
                     new string[]
                     {

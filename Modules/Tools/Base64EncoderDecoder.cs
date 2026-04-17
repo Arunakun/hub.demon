@@ -11,7 +11,7 @@ namespace hub.demon.Modules.Tools
         {
             while (true)
             {
-                int? choice = ConsoleHelper.Navigation(
+                int? choice = ConsoleNavigator.Navigation(
                     "BASE64 ENCODER/DECODER",
                     new string[]
                     {
