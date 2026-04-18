@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Modules\Tools\Simulation\OSRS\Monsters\" />
+  </ItemGroup>
+
 </Project>

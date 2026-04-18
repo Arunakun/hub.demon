@@ -1,0 +1,30 @@
+[100%]
+Bones,1,1,1/1
+
+[MAIN]
+Bronze spear,1,1,1/32
+Bronze sq shield,1,1,1/42.67
+Water rune,6,6,1/21.33
+Body rune,7,7,1/25.6
+Earth rune,4,4,1/42.67
+Bronze bolts,8,8,1/42.67
+Coins,5,5,1/4.571
+Coins,9,9,1/42.67
+Coins,15,15,1/42.67
+Coins,20,20,1/64
+Coins,1,1,1/128
+Nothing,,,1/3.368
+Hammer,1,1,1/8.533
+Goblin mail,1,1,1/25.6
+Chef's hat,1,1,1/42.67
+Goblin book,1,1,1/64
+Beer,1,1,1/64
+Brass necklace,1,1,1/128
+Air talisman,1,1,1/128
+
+[TERT]
+Goblin skull,1,1,1/4
+Ensouled goblin head,1,1,1/35
+Clue scroll (beginner),1,1,1/64
+Clue scroll (easy),1,1,1/128
+Goblin champion scroll,1,1,1/5000

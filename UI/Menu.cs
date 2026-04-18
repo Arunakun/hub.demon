@@ -19,7 +19,7 @@ namespace hub.demon
         
                 new MenuItem("Simulation", new List<MenuItem>
                 {
-                    // OSRS tool will go here
+                    new MenuItem("OSRS Loot Simulator", Modules.Tools.Simulation.OSRS.LootRunner.RunSimulator)
                 })
             }),
         
