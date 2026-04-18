@@ -20,45 +20,98 @@ namespace hub.demon.Modules.Tools
                 if (choice == null || choice == 2)
                     return;
                 if (choice == 0)
-                    RunEncoderFlow();
-                if (choice == 1)
-                    RunDecoderFlow();
+                    RunBase64Flow(true);
+                else if (choice == 1)
+                    RunBase64Flow(false);
             }
         }
 
-        public static void RunEncoderFlow()
+        public static void RunBase64Flow(bool startEncode)
         {
-            Console.Clear();
-            Console.WriteLine("Enter the text to encode:");
-            string input = Console.ReadLine() ?? "";
-            string encoded = Convert.ToBase64String(Encoding.UTF8.GetBytes(input));
-            Console.Clear();
-            Console.WriteLine("Encoded result:\n");
-            Console.WriteLine(encoded);
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey();
-        }
+            string input = "";
+            bool encodeMode = startEncode;
 
-        public static void RunDecoderFlow()
-        {
-            Console.Clear();
-            Console.WriteLine("Enter the Base64 string to decode:");
-            string input = Console.ReadLine() ?? "";
-            try
-            {
-                byte[] data = Convert.FromBase64String(input);
-                string decoded = Encoding.UTF8.GetString(data);
-                Console.Clear();
-                Console.WriteLine("Decoded result:\n");
-                Console.WriteLine(decoded);
-            }
-            catch (FormatException)
+            while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Invalid Base64 string.");
+
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    Console.WriteLine(encodeMode
+                        ? "Enter the text to encode:"
+                        : "Enter the Base64 string to decode:");
+
+                    input = Console.ReadLine() ?? "";
+
+                    if (string.IsNullOrWhiteSpace(input))
+                    {
+                        Console.WriteLine("\nInput cannot be empty.");
+                        Console.ReadKey();
+                        continue;
+                    }
+                }
+
+                string result;
+
+                try
+                {
+                    if (encodeMode)
+                    {
+                        result = Convert.ToBase64String(Encoding.UTF8.GetBytes(input));
+                    }
+                    else
+                    {
+                        byte[] data = Convert.FromBase64String(input);
+                        result = Encoding.UTF8.GetString(data);
+                    }
+
+                    Console.Clear();
+
+                    Console.WriteLine(encodeMode ? "Encoded result:\n" : "Decoded result:\n");
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(result);
+                    Console.ResetColor();
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("\nInvalid Base64 string.");
+                    Console.ReadKey();
+                    input = ""; // force re-entry
+                    continue;
+                }
+
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey();
+
+                int? next = ConsoleNavigator.Navigation(
+                    "WHAT NEXT?",
+                    new string[]
+                    {
+                "Encode",
+                "Decode",
+                "Use result as new input",
+                "Back to menu"
+                    });
+
+                if (next == null || next == 3)
+                    return;
+
+                if (next == 0)
+                {
+                    encodeMode = true;
+                    input = ""; // force new input
+                }
+                else if (next == 1)
+                {
+                    encodeMode = false;
+                    input = ""; // force new input
+                }
+                else if (next == 2)
+                {
+                    input = result; // reuse result
+                }
             }
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey();
         }
     }
 }
