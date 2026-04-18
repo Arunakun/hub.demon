@@ -2,7 +2,7 @@
 using System.Text;
 using System.Security.Cryptography;
 
-namespace hub.demon.Modules.Tools
+namespace hub.demon.Modules.Tools.CyberSec
 {
     internal class HashEncoder
     {

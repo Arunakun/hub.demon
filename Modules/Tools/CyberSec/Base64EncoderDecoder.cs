@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using hub.demon.UI;
 
-namespace hub.demon.Modules.Tools
+namespace hub.demon.Modules.Tools.CyberSec
 {
     internal class Base64EncoderDecoder
     {

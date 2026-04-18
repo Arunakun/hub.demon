@@ -1,24 +1,33 @@
-﻿namespace hub.demon
+﻿using hub.demon.Modules.Tools.CyberSec;
+
+namespace hub.demon
 {
     // Represents the main menu of the application, allowing users to select different tools.
     // Each item maps a display name to an action that executes the corresponding tool's main function.
     internal class Menu
     {
-        private List<MenuItem> _items =
-            new List<MenuItem>
+        private List<MenuItem> _items = new List<MenuItem>
+        {
+            new MenuItem("Tools", new List<MenuItem>
             {
-                new MenuItem("CyberSec Tools", new List<MenuItem>
+                new MenuItem("CyberSec", new List<MenuItem>
                 {
-                    new MenuItem("Caesar Cipher", Modules.Tools.CaesarCipher.CaesarMain),
-                    new MenuItem("Base64 Encoder/Decoder", Modules.Tools.Base64EncoderDecoder.Base64EncoderDecoderMain),
-                    new MenuItem("Hash Encoder", Modules.Tools.HashEncoder.HashEncoderMain)
+                    new MenuItem("Caesar Cipher", CaesarCipher.CaesarMain),
+                    new MenuItem("Base64 Encoder/Decoder", Base64EncoderDecoder.Base64EncoderDecoderMain),
+                    new MenuItem("Hash Encoder", HashEncoder.HashEncoderMain)
                 }),
-
-                new MenuItem("Minigames", new List<MenuItem>
+        
+                new MenuItem("Simulation", new List<MenuItem>
                 {
-                    // empty for now
+                    // OSRS tool will go here
                 })
-            };
+            }),
+        
+            new MenuItem("Minigames", new List<MenuItem>
+            {
+                // empty for now
+            })
+        };
 
         public void Run()
         {
